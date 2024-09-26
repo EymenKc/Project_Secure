@@ -5,6 +5,7 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import padding
 import make_base64
 import base64
+import os
 
 # AES encryption function
 def encrypt_aes(data, key):
@@ -87,6 +88,12 @@ def encrypt_data(file_path, password, salt):
 
     # Encrypt the file name and encode it to hexadecimal string
     encrypted_file_name = encrypt_aes(name.encode('utf-8'), key).hex()
+
+    # Create the Encrypted_files folder if it doesn't exist
+    try:
+        os.makedirs("Encrypted_files")
+    except FileExistsError:
+        pass
 
     # Write the encrypted data to a custom file type and save it to Encrypted_files folder
     with open("Encrypted_files/" + encrypted_file_name + ".crypt", "wb") as file:

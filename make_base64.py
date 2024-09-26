@@ -1,5 +1,5 @@
 import base64
-
+import os
 
 def file_to_base64(file_path):
     with open(file_path, "rb") as file:
@@ -12,6 +12,11 @@ def file_to_base64(file_path):
 
             
 def base64_to_file(file_name, decrypted_data, format, folder_name="Decrypted_files"):
+    # Create a folder if it doesn't exist
+    try:
+        os.makedirs(folder_name)
+    except FileExistsError:
+        pass
 
     # Create a file and write binary data to it
     with open(f"{folder_name}/{file_name}.{format}", "wb") as decoded_file:
